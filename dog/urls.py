@@ -30,7 +30,13 @@ urlpatterns = [
     ########################################################################
 
     # HOST - ADD COTTAGE
-    url(r'^add-cottage/$', views.addcottage, name='addcottage'),
+    url(r'^host-add-cottage/$', views.add_cottage, name='addcottage'),
+
+    # HOST - EDIT COTTAGE
+    url(r'^host-edit-cottage/$', views.edit_cottage, name='editcottage'),
+
+    # HOST - SHOW BOOKINGS
+    url(r'^host-show-bookings/$', views.show_bookings, name='showbookings'),
 
     ########################################################################
     # ADMIN SPECIFIC

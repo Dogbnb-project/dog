@@ -106,11 +106,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request,
-                  'dog/register.html',
-                  {'user_form': user_form,
-                   'profile_form': profile_form,
-                   'registered': registered})
+    return render(request,'dog/register.html',{'user_form': user_form,'profile_form': profile_form,'registered': registered})
 
 # LATEST COTTAGES
 #  - Gets the latest cottages from the database
@@ -122,14 +118,6 @@ def latestcottages(request):
     cottages_list = Cottage.objects.all()
 
     return render(request, 'dog/latest-cottages.html', locals())
-
-# ADD A COTTAGE
-# - Form to add a cottage
-def addcottage(request):
-
-    add_cottage = AddCottageForm()
-
-    return render(request, 'dog/add-cottage.html', {'add_cottage': add_cottage,})
 
 # page 124
 #@login_required
@@ -147,9 +135,9 @@ def search_results(request):
 # ACCOUNT
 # - Caters for Tourist, Host, and Admin
 # - Checks logged in user to decide which options to display
-def search_results(request):
+def account(request):
 
-    return render(request, 'dog/search-results.html', {})
+    return render(request, 'dog/account.html', {})
 
 # ADMIN - REPORTS
 # - Display totals for various data sets
@@ -160,3 +148,25 @@ def search_results(request):
 def admin_reports(request):
 
     return render(request, 'dog/admin-reports.html', {})
+
+########################################################################
+# HOST SPECIFIC
+########################################################################
+
+# HOST - ADD A COTTAGE
+# - Form to add a cottage
+def add_cottage(request):
+
+    add_cottage = AddCottageForm()
+
+    return render(request, 'dog/host-add-cottage.html', {'add_cottage': add_cottage,})
+
+# HOST - EDIT COTTAGE
+def edit_cottage(request):
+
+    return render(request, 'dog/host-edit-cottage.html', {})
+
+# HOST - SHOW BOOKINGS
+def show_bookings(request):
+
+    return render(request, 'dog/host-show-bookings.html', {})
