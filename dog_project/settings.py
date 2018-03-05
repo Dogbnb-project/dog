@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'social_django',
     # APPLICATION
     'dog',
+    #REGISTRATION
+    'registration',
     
 ]
 
@@ -46,6 +48,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'dog_project.urls'
+
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/dog/'
+LOGIN_URL = '/accounts/login/'
+
 
 TEMPLATES = [
     {

@@ -10,7 +10,7 @@ from django.utils import timezone
 ########################################################################
 # BOOKINGS
 ########################################################################
-class Booking(models.Model):
+'''class Booking(models.Model):
     
     # WIP - NOT READY TO BE MIGRATED YET [NEEDS TESTED]
     #cottage_id = models.IntegerField(blank=True, default=0)
@@ -18,11 +18,12 @@ class Booking(models.Model):
     #datebookedon = models.DateTimeField(auto_now_add=True, blank=True)
     #datebookedfrom = models.DateTimeField(blank=True)
     #datebookedto = models.DateTimeField(blank=True)
-
+'''
 ########################################################################
 # REVIEWS / RATINGS
 ########################################################################
-class Review(models.Model):
+
+'''class Review(models.Model):
 
     # MIGRATE ON TUESDAY EVENING
     # cottage_id
@@ -31,20 +32,22 @@ class Review(models.Model):
     # comments
     # rating [1 to 10 maybe]
 
-
+'''
 ########################################################################
 # CONTACT - Data from a contact form submission
 ########################################################################
-class Contact(models.Model):
+
+'''class Contact(models.Model):
 
     # MIGRATE ON TUESDAY EVENING
     #contact_name = models.CharField(max_length=50,blank=True) # first name
     #contact_email = models.EmailField(max_length=50,blank=True)
     #form_content = models.TextField(max_length=500, blank=True)
-
+'''
 ########################################################################
 # Profile extends the default user table
 ########################################################################
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User)

@@ -13,13 +13,13 @@ urlpatterns = [
     url(r'contact/$', views.contact, name='contact'),
     
     # REGISTER
-    url(r'register/$', views.register, name='register'),
+    #url(r'register/$', views.register, name='register'),
 
     # LATEST COTTAGES
     url(r'latest-cottages/$', views.latestcottages, name='latestcottages'), 
 
     # LOGOUT
-    url(r'^logout/$', views.user_logout, name='logout'),
+    #url(r'^logout/$', views.user_logout, name='logout'),
 
     # SEARCH RESULTS
     url(r'^search-results/$', views.search_results, name='searchresults'),

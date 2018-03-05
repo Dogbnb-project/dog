@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from registration.backends.simple.views import RegistrationView
 
 
 ################
@@ -77,7 +78,7 @@ def contact(request):
     return render(request, 'dog/contact.html', {'form': form_class,})
 
 # REGISTER [caters for both a Guest and a host]
-def register(request):
+'''def register(request):
 
     registered = False
     
@@ -109,6 +110,13 @@ def register(request):
         profile_form = UserProfileForm()
 
     return render(request,'dog/register.html',{'user_form': user_form,'profile_form': profile_form,'registered': registered})
+'''
+
+#UPDATED REGISTRATIION FORM
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return '/dog/'
 
 # LATEST COTTAGES
 #  - Gets the latest cottages from the database

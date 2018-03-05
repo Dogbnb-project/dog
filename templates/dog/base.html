@@ -13,13 +13,13 @@ DOG BNB -
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
      <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
 		
 		$(document).ready(function(){
-
 			// set the random image for the site background
 			// only requires the relative path to the STATIC FILES folder
 			var images = 10; // number of images
@@ -27,63 +27,117 @@ DOG BNB -
 			var randImage = Math.floor(Math.random() * images) + 1; 
       // Change the background image
 			$(".background").css("background-image", "url('{% static "images/bg_" %}"+ randImage + ".jpg')");
-
 		});
-
 	</script>
 
 	<style>
-
 		body, html {
-
 			height: 100%;
 			margin: 0;
 			font: 400 15px/1.8 "Lato", sans-serif;
 			color: #777;
 		}
-
 		.background { 
-
 			height: 100%;
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
 		
 		}
-
+		.container{
+			border-radius: 15px;
+		}
 		div.menu {
 			
 			margin-top: 20px;
 			padding: 0px;
 		}
-
 		div.footer {
 			height:120px;
 			margin: 10px auto 20px auto;
 			padding: 0px;
 			background: rgba(255, 255, 255, 0.8);
 		}
-
 		div.searchcontent {
-			height:40px;
+			height:60px;
 			margin-top: 10px;
+			margin-left: auto;
+    			margin-right: auto;	
 			padding: 10px;
     			background: rgba(255, 255, 255, 0.8);
 		}
-
 		div.maincontent {
 			margin-top: 10px;
-			padding: 10px;
+			padding: 15px;
     			background: rgba(255, 255, 255, 0.8);
+			
 		}
-
-
 		.navbar {
 			padding: 15px;
 			margin: 0px !important;
+			border-radius: 15px;	
+		}
+		
+		.button{
+			border: none;
+   			color: white;
+    			padding: 5px;
+    			text-align: center;
+    			text-decoration: none;
+    			display: inline-block;
+   	 		font-size: 16px;
+   			margin: 4px 2px;
+    			-webkit-transition-duration: 0.4s; /* Safari */
+   			transition-duration: 0.4s;
+    			cursor: pointer;
+			border-radius: 10px;
 		}
 
+		.searchbutton{
+    			background-color: white;
+    			color: black;
+    			border: 2px solid #483D8B;
+			//box-shadow: 1px 1px 11px #330033;
+		}
 
+		.searchbutton:hover {
+    			background-color: #483D8B;
+    			color: white;
+		}
+		.search{
+			float: left;
+      			position: relative;
+			padding-left: 10px;
+			padding-right: 10px;	
+		}
+		.region{
+    			position: relative;
+  			display: inline-block;
+		}
+			
+		#region{
+			overflow:hidden;
+   			width:350px;
+			-moz-border-radius: 9px 9px 9px 9px;
+   			-webkit-border-radius: 9px 9px 9px 9px;
+   			border-radius: 9px 9px 9px 9px;
+   			//box-shadow: 1px 1px 11px #330033;
+			background-color: white;
+    			color: black;
+    			border: 2px solid #483D8B;
+		}
+		#region:hover {
+    			background-color: #483D8B;
+    			color: white;
+		}
+		.input{
+			background-color: white;
+    			color: black;
+    			border: 2px solid #483D8B;
+			border-radius: 10px;
+			//box-shadow: 1px 1px 11px #330033;
+		}
+		
 	</style>
 
 </head>
@@ -92,7 +146,7 @@ DOG BNB -
 <!--- nav content area --> 
 <div class="container menu">
 
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav  id="navbar" class="navbar navbar-toggleable-md navbar-light bg-faded">
 
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -113,13 +167,13 @@ DOG BNB -
         <a class="nav-link" href="/dog/contact/">Contact us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/dog/register/">Register</a>
+        <a class="nav-link" href="{% url 'registration_register' %}">Register</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/dog/add-cottage/">Add a cottage [needs secured]</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/dog/logout/">Logout [display if logged in]</a>
+        <a class="nav-link" href="{% url 'auth_logout' %}?next=/dog/">Logout [display if logged in]</a>
       </li>
 
     </ul>
@@ -169,20 +223,20 @@ DOG BNB -
 <!--- search bar -->
 <div class="container searchcontent">
 
-  <form>
+  <form class="search">
 
-    <select>
-
-    	<option>--select region</option>
-    	<option value='region1'>Region 1</option>
+    <select id="region" class="button">
+	<option>--select region</option>
+	<option value='region1'>Region 1</option>
     	<option value='region2'>Region 2</option>
-
+	</div>
+	</div>
     </select>
 
-    <input type="text" name="price_from">
-    <input type="text" name="price_to">
+    <input class="input" type="text" name="price_from">
+    <input class="input" type="text" name="price_to">
 
-    <input type="submit" value='Search'>
+    <input class="button searchbutton" type="submit" value='Search'>
 
 
   </form>

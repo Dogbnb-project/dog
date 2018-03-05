@@ -16,4 +16,7 @@ urlpatterns = [
     
     # ADMIN SITE
     url(r'^admin/', admin.site.urls),
-]
+    # REGISTRATION
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^accounts/register/$', views.MyRegistrationView, name='registration_register'),
+    ]
