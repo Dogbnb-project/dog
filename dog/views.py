@@ -139,4 +139,14 @@ def user_logout(request):
     
     return HttpResponseRedirect(reverse('index'))
 
+# SEARCH RESULTS
+def search_results(request):
 
+    return render(request, 'dog/search-results.html', {})
+
+# ACCOUNT
+# - Caters for Tourist, Host, and Admin
+# - Checks logged in user to decide which options to display
+def search_results(request):
+
+    return render(request, 'dog/search-results.html', {})

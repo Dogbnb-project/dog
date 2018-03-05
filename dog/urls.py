@@ -23,6 +23,11 @@ urlpatterns = [
 
     # ADD COTTAGE
     url(r'^add-cottage/$', views.addcottage, name='addcottage'),
+
+
+    # SEARCH RESULTS
+    url(r'^search-results/$', views.search_results, name='searchresults'),
+
     
     # RANGO VIEWS FOR REFERENCE
 
