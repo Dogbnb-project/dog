@@ -24,10 +24,9 @@ class Booking(models.Model):
 ########################################################################
 class Review(models.Model):
 
-    # NOT READY TO BE MIGRATED YET
-
+    # MIGRATE ON TUESDAY EVENING
     # cottage_id
-    cottage_id = models.IntegerField(blank=True, default=0)
+    #cottage_id = models.IntegerField(blank=True, default=0)
     # user_id
     # comments
     # rating [1 to 10 maybe]
@@ -36,15 +35,12 @@ class Review(models.Model):
 ########################################################################
 # CONTACT - Data from a contact form submission
 ########################################################################
-class Review(models.Model):
+class Contact(models.Model):
 
-    # NOT READY TO BE MIGRATED YET
-
-    # cottage_id
-    cottage_id = models.IntegerField(blank=True, default=0)
-    # user_id
-    # comments
-    # rating [1 to 10 maybe]
+    # MIGRATE ON TUESDAY EVENING
+    #contact_name = models.CharField(max_length=50,blank=True) # first name
+    #contact_email = models.EmailField(max_length=50,blank=True)
+    #form_content = models.TextField(max_length=500, blank=True)
 
 ########################################################################
 # Profile extends the default user table
@@ -111,7 +107,6 @@ class Cottage(models.Model):
     picture = models.ImageField(upload_to='cottage_images', blank=True)
 
     def save(self, *args, **kwargs):
-        
         self.slug = slugify(self.name)
         super(Cottage, self).save(*args, **kwargs)
 
@@ -120,10 +115,3 @@ class Cottage(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
-
-
-
-

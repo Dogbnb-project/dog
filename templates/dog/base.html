@@ -23,7 +23,9 @@ DOG BNB -
 			// set the random image for the site background
 			// only requires the relative path to the STATIC FILES folder
 			var images = 10; // number of images
+      // Get a random image from 1 to 10
 			var randImage = Math.floor(Math.random() * images) + 1; 
+      // Change the background image
 			$(".background").css("background-image", "url('{% static "images/bg_" %}"+ randImage + ".jpg')");
 
 		});

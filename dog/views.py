@@ -60,9 +60,7 @@ def contact(request):
             # Email message
             email = EmailMessage(
                 
-                "New contact form submission",
-                content,
-                "Website" +'', ['youremail@gmail.com'], headers = {'Reply-To': contact_email }
+                "New contact form submission",content, "Website" +'', ['youremail@gmail.com'], headers = {'Reply-To': contact_email }
             )
 
 
