@@ -65,6 +65,10 @@ def contact(request):
                 "Website" +'', ['youremail@gmail.com'], headers = {'Reply-To': contact_email }
             )
 
+
+            # TODO
+            #save the contact details to a model for the admin site
+
             # Send email
             email.send()
             

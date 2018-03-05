@@ -8,15 +8,13 @@ DOG BNB -
 {% block title_block %}
 {% endblock %}
 </title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    
      <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 
 	<script type="text/javascript">
 		
@@ -33,7 +31,6 @@ DOG BNB -
 	</script>
 
 	<style>
-
 
 		body, html {
 
@@ -125,32 +122,44 @@ DOG BNB -
 
     </ul>
 
-<ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+    <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
 
-<li class="nav-item order-2 order-md-1"><a href="#" class="nav-link" title="settings"><i class="fa fa-cog fa-fw fa-lg"></i></a></li>
-                <li class="dropdown order-1">
-                    <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right mt-1">
-                      <li class="p-3">
-                            <form class="form" role="form">
-                                <div class="form-group">
-                                    <input id="emailInput" placeholder="Email" class="form-control form-control-sm" type="text" required="">
-                                </div>
-                                <div class="form-group">
-                                    <input id="passwordInput" placeholder="Password" class="form-control form-control-sm" type="text" required="">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                </div>
-                                <div class="form-group text-xs-center">
-                                    <small><a href="#">Forgot password?</a></small>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+    <li class="nav-item order-2 order-md-1"><a href="#" class="nav-link" title="settings"><i class="fa fa-cog fa-fw fa-lg"></i></a></li>
+
+    <li class="dropdown order-1">
+
+        <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span></button>
+
+        <ul class="dropdown-menu dropdown-menu-right mt-1">
+
+          <li class="p-3">
+
+                <form class="form" role="form">
+
+                    <div class="form-group">
+                        <input id="emailInput" placeholder="Email" class="form-control form-control-sm" type="text" required="">
+                    </div>
+                    <div class="form-group">
+                        <input id="passwordInput" placeholder="Password" class="form-control form-control-sm" type="text" required="">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </div>
+                    <div class="form-group text-xs-center">
+                        <small><a href="#">Forgot password?</a></small>
+                    </div>
+
+                </form>
+
+            </li>
+
+        </ul>
+
+    </li>
+    </ul>
+
   </div>
+
 </nav>
 </div>
 
@@ -158,22 +167,23 @@ DOG BNB -
 <!--- search bar -->
 <div class="container searchcontent">
 
-<form>
+  <form>
 
-<select>
+    <select>
 
-	<option>--select region</option>
-	<option value='region1'>Region 1</option>
-	<option value='region2'>Region 2</option>
-</select>
+    	<option>--select region</option>
+    	<option value='region1'>Region 1</option>
+    	<option value='region2'>Region 2</option>
 
-<input type="text" name="price_from">
-<input type="text" name="price_to">
+    </select>
 
-<input type="submit" value='Search'>
+    <input type="text" name="price_from">
+    <input type="text" name="price_to">
+
+    <input type="submit" value='Search'>
 
 
-</form>
+  </form>
 
 </div>
 

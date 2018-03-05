@@ -32,6 +32,20 @@ class Review(models.Model):
     # comments
     # rating [1 to 10 maybe]
 
+
+########################################################################
+# CONTACT - Data from a contact form submission
+########################################################################
+class Review(models.Model):
+
+    # NOT READY TO BE MIGRATED YET
+
+    # cottage_id
+    cottage_id = models.IntegerField(blank=True, default=0)
+    # user_id
+    # comments
+    # rating [1 to 10 maybe]
+
 ########################################################################
 # Profile extends the default user table
 ########################################################################
