@@ -8,6 +8,31 @@ from django.utils import timezone
 ############
 
 ########################################################################
+# BOOKINGS
+########################################################################
+class Booking(models.Model):
+    
+    # WIP - NOT READY TO BE MIGRATED YET [NEEDS TESTED]
+    #cottage_id = models.IntegerField(blank=True, default=0)
+    #bookedby  = models.IntegerField(blank=True, default=0)
+    #datebookedon = models.DateTimeField(auto_now_add=True, blank=True)
+    #datebookedfrom = models.DateTimeField(blank=True)
+    #datebookedto = models.DateTimeField(blank=True)
+
+########################################################################
+# REVIEWS / RATINGS
+########################################################################
+class Review(models.Model):
+
+    # NOT READY TO BE MIGRATED YET
+
+    # cottage_id
+    cottage_id = models.IntegerField(blank=True, default=0)
+    # user_id
+    # comments
+    # rating [1 to 10 maybe]
+
+########################################################################
 # Profile extends the default user table
 ########################################################################
 class UserProfile(models.Model):
@@ -31,6 +56,9 @@ class UserProfile(models.Model):
 # Cottage
 ########################################################################
 class Cottage(models.Model):
+
+    # check this out and see if this is true for auto increment
+    # https://stackoverflow.com/questions/21128899/how-to-make-an-auto-increment-integer-field-django
 
     host = models.ForeignKey(User)
     name = models.CharField(max_length=128,blank=True)

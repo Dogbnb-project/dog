@@ -21,7 +21,6 @@ urlpatterns = [
     # LOGOUT
     url(r'^logout/$', views.user_logout, name='logout'),
 
-   
     # SEARCH RESULTS
     url(r'^search-results/$', views.search_results, name='searchresults'),
 
@@ -44,6 +43,11 @@ urlpatterns = [
 
     # ADMIN - REPORTS
     url(r'^admin-reports/$', views.admin_reports, name='adminreports'),
+
+    ########################################################################
+    # COTTAGE SPECIFIC
+    ########################################################################
+    #url(r'^cottage/(?P<cottage_name_slug>[\w\-]+)/$',views.show_category,name='show_category'),
     
     # RANGO VIEWS FOR REFERENCE
 
