@@ -1,0 +1,35 @@
+{% extends 'dog/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+ Add your cottage
+{% endblock %}
+
+{% block body_block %}
+ 
+  {% if registered %}
+
+  	<h1>Success</h1>
+  	<p>Thank you for registering with DOG BNB!</p>
+ 	<p>Please login with your username and password.</p>
+
+  {% else %}
+
+	<h1>Add your cottage</h1>
+	<p>Adding your cottage is easy! Just fill out the form below.</p>
+	<p>All fields are required.</p>
+
+	<form role="form" action="{% url 'addcottage' %}" method="post" enctype="multipart/form-data">
+
+    		{% csrf_token %}
+   		<!-- Display each form -->
+    		{{ add_cottage.as_p }}
+
+    		<!--Provide a button to click to submit the form. -->
+    		<input type="submit" name="submit" value="Add cottage" />
+
+	</form>
+
+  {% endif %}
+
+{% endblock %}
