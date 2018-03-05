@@ -150,3 +150,13 @@ def search_results(request):
 def search_results(request):
 
     return render(request, 'dog/search-results.html', {})
+
+# ADMIN - REPORTS
+# - Display totals for various data sets
+# - i.e. how many users are signed up
+# - total cottages
+# - Visits to cottages
+# - Just need to compile a reasonable set of figures
+def admin_reports(request):
+
+    return render(request, 'dog/admin-reports.html', {})

@@ -21,13 +21,23 @@ urlpatterns = [
     # LOGOUT
     url(r'^logout/$', views.user_logout, name='logout'),
 
-    # ADD COTTAGE
-    url(r'^add-cottage/$', views.addcottage, name='addcottage'),
-
-
+   
     # SEARCH RESULTS
     url(r'^search-results/$', views.search_results, name='searchresults'),
 
+    ########################################################################
+    # HOST SPECIFIC
+    ########################################################################
+
+    # HOST - ADD COTTAGE
+    url(r'^add-cottage/$', views.addcottage, name='addcottage'),
+
+    ########################################################################
+    # ADMIN SPECIFIC
+    ########################################################################
+
+    # ADMIN - REPORTS
+    url(r'^admin-reports/$', views.admin_reports, name='adminreports'),
     
     # RANGO VIEWS FOR REFERENCE
 
