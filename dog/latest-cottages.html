@@ -1,0 +1,32 @@
+{% extends 'dog/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Latest Cottages
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Latest Cottages</h1>
+<p>These are the latest cottages added to the DOG BNB website.</p>
+<p>If you would like to add your own cottage to the site you can register as a host.</p>
+
+{% if cottages_list %}
+
+
+    {% for cottage in cottages_list %}
+
+        <h3>{{ cottage.name }}</h3>
+        
+        <!-- <a href="/dog/cottages/{{ cottage.name }}/"><img {{ cottage.picture }}</a></td> -->
+
+        
+    {% endfor %}
+
+
+
+{% else %}
+    <p>There are no cottages available.</p>
+{% endif %}
+
+{% endblock %}

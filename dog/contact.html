@@ -1,0 +1,31 @@
+{% extends 'dog/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Contact us
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Contact us</h1>
+<p>To contact us, please fill out the form below.</p>
+<p>All fields are required.</p>
+
+{% if messages %}
+
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+
+{% endif %}
+
+<form role="form" action="" method="post">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Submit</button>
+
+</form>
+
+{% endblock %}
