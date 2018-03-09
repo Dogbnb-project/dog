@@ -1,53 +1,45 @@
 from django import forms
-from django.contrib.auth.models import User
-from dog.models import UserProfile
 from dog.models import Cottage
+from dog.models import Region
+from dog.models import UserProfile
+from django.contrib.auth.models import User 
 
-###################################################
-# ADD A COTTAGE
-###################################################
-class AddCottageForm(forms.ModelForm):
-
+class RegionForm(forms.ModelForm):
+    name = forms.CharField(max_length=128, help_text="Please enter the region name.")
+    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     class Meta:
-        
+        model = Region
+        fields = ('name',)
+
+class CottageForm(forms.ModelForm):
+    title = forms.CharField(max_length=128, help_text="Please enter the name of the cottage.")
+    address = forms.CharField(max_length=200, help_text="Please enter the address of the cottage.")
+    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    class Meta:
         model = Cottage
-        fields = ('name','region','sleeps','addr1','addr2','addr3','postcode','phone','price_from','price_to','picture')
+        exclude = ('region',)
 
-###################################################
-# CONTACT FORM
-###################################################
-class ContactForm(forms.Form):
-    
-    contact_name = forms.CharField(required=True)
-    contact_email = forms.EmailField(required=True)
-    content = forms.CharField(required=True,widget=forms.Textarea)
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        url = cleaned_data.get('url')
 
-###################################################
-# USER SIGN UP [base] [Page 111 of Rango Book]
-###################################################
+        if url and not url.startswith('http://'):
+            url = 'http://' + url
+            cleaned_data['url'] = url
+
+            return cleaned_data
+
 class UserForm(forms.ModelForm):
-    
     password = forms.CharField(widget=forms.PasswordInput())
+
     class Meta:
-        
         model = User
         fields = ('username', 'email', 'password')
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture')
 
-###################################################
-# USER SIGN UP [extended user form]
-###################################################
-class UserProfileForm(forms.Form):
-
-    # Drop down options for user types [admin not included!]
-    USER_TYPES = (
-        ('','-- select'),
-        ('guest','Guest'),
-        ('host','Host'),
-
-    )
-    
-    usertype = forms.ChoiceField(required=True,choices=USER_TYPES, label="Guest / Host?") # drop down
-    fname  = forms.CharField(required=True, label="First name") # text area
-    lname  = forms.CharField(required=True, label="Last name") # text area
-    bio  = forms.CharField(widget=forms.Textarea, required=True, label="About you") # text area
-    picture  = forms.ImageField(required=True, label="Last name") # text area

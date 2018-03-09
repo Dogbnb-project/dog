@@ -1,182 +1,129 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.template import Context
-from django.core.mail import EmailMessage
-from django.template.loader import get_template
-from dog.forms import ContactForm,UserForm,UserProfileForm,AddCottageForm
-from .models import Cottage
-from django.contrib import messages
-from django.contrib.auth import logout
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.decorators import login_required
 from registration.backends.simple.views import RegistrationView
+from django.shortcuts import render_to_response
+from django.shortcuts import render
+from django.http import HttpResponse
+from dog.models import Region
+from dog.models import Cottage
+from dog.forms import RegionForm
+from dog.forms import CottageForm
+from dog.forms import UserForm
+from dog.forms import UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from datetime import datetime
+from django.template import RequestContext
 
-
-################
-# DOG BNB views
-################
-
-#####################################################
-# STUFF TO DO. SEND BACK MESSAGES TO CONTACT TEMPLATE
-#####################################################
-
-# INDEX [HOME]
 def index(request):
-    
-    return render(request, 'dog/index.html', {})
 
-# ABOUT US
+   request.session.set_test_cookie()
+   region_list = Region.objects.order_by('-likes')[:5]
+   cottage_list = Cottage.objects.order_by('-views')[:5]
+   context_dict = {'cottages':cottage_list, 'regions':region_list}
+
+   visitor_cookie_handler(request)
+   context_dict['visits'] = request.session['visits']
+
+   print(request.session['visits'])
+   
+   response = render(request, 'dog/index.html', context=context_dict)
+   return response
+
 def about(request):
+   context_dict = {}
+   visitor_cookie_handler(request) 
+   context_dict['visits'] = request.session['visits']
+   return render(request, 'dog/about.html', context=context_dict)
 
-    return render(request, 'dog/about.html', {})
+def show_region(request, region_name_slug):
+   context_dict = {}
+   try:
+      region = Region.objects.get(slug=region_name_slug)
+      cottages = Cottage.objects.filter(region=region)
+      context_dict['cottages'] = cottages
+      context_dict['region'] = region
+   except Region.DoesNotExist:
+      context_dict['cottages'] = None
+      context_dict['region'] = None
+      
+   return render(request, 'dog/region.html', context_dict)
 
-# CONTACT US
-def contact(request):
-    
-    form_class = ContactForm
-    
-    # Process form
-    if request.method == 'POST':
-        form = form_class(data=request.POST)
+def add_region(request):
+   form = RegionForm()
 
-        if form.is_valid():
-            
-            contact_name = request.POST.get('contact_name', '')
-            contact_email = request.POST.get('contact_email', '')
-            form_content = request.POST.get('content', '')
+   if request.method =='POST':
+      form = RegionForm(request.POST)
 
-            # Email details
-            template = get_template('dog/contact_template.txt')
-            context = {
-            'contact_name': contact_name,
-            'contact_email': contact_email,
-            'form_content': form_content,
-            }
-
-            content = template.render(context)
-
-            # Email message
-            email = EmailMessage(
-                
-                "New contact form submission",content, "Website" +'', ['youremail@gmail.com'], headers = {'Reply-To': contact_email }
-            )
+      if form.is_valid():
+         reg = form.save(commit=True)
+         print(reg, reg.slug)
+         
+         return index(request)
+   
+      else: print(form.errors)
+   return render(request, 'dog/add_region.html', {'form':form})
 
 
-            # TODO
-            #save the contact details to a model for the admin site
+def add_cottage(request, region_name_slug):
+   try:
+      region = Region.objects.get(slug=region_name_slug)
+   except Region.DoesNotExist:
+      region = None
+   
+   form = CottageForm()
+   if request.method == 'POST':
+      form = CottageForm(request.POST)
+      if form.is_valid():
+         if region:
+            cottage = form.save(commit=False)
+            cottage.region = region
+            cottage.views = 0
+            cottage.save()
+            return show_region(request, region_name_slug)
+      else:
+         print(form.errors)
+         
+   context_dict = {'form':form, 'region':region}      
+   return render(request, 'dog/add_cottage.html', context_dict)
 
-            # Send email
-            email.send()
-            
-            # Send a message back to the user
-            messages.success(request, ('Your email was succcessfully sent.'))
-            return redirect('contact')
 
-    return render(request, 'dog/contact.html', {'form': form_class,})
+@login_required
+def restricted(request):
+   return render(request, 'dog/restricted.html', {})
 
-# REGISTER [caters for both a Guest and a host]
-'''def register(request):
 
-    registered = False
-    
-    if request.method == 'POST':
+#@login_required
+#def user_logout(request):
+#   logout(request)
+#   return HttpResponseRedirect(reverse('index'))
 
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            profile.save()
-            registered = True
-
-        else:
-            
-            print(user_form.errors, profile_form.errors)
-    else:
-        
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    return render(request,'dog/register.html',{'user_form': user_form,'profile_form': profile_form,'registered': registered})
-'''
-
-#UPDATED REGISTRATIION FORM
+def get_server_side_cookie(request, cookie, default_val=None):
+      val = request.session.get(cookie)
+      if not val:
+         val = default_val
+      return val
 
 class MyRegistrationView(RegistrationView):
-    def get_success_url(self, user):
-        return '/dog/'
+   def get_success_url(self, user):
+      return '/dog/'
 
-# LATEST COTTAGES
-#  - Gets the latest cottages from the database
-def latestcottages(request):
 
-    #latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    # Get the lastest cottages
-    # Need to decide how many to retrieve [maybe just get 10 and sort by name]
-    cottages_list = Cottage.objects.all()
+def visitor_cookie_handler(request):
+      visits = int(request.COOKIES.get('visits', '1'))
+      last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+      last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+      '%Y-%m-%d %H:%M:%S')
 
-    return render(request, 'dog/latest-cottages.html', locals())
+      if (datetime.now() - last_visit_time).days > 0:
+         visits = visits + 1
+         request.session['last_visit'] = str(datetime.now())
+      else:
+         
+         request.session['last_visit'] = last_visit_cookie
 
-# page 124
-#@login_required
-def user_logout(request):
-    
-    logout(request)
-    
-    return HttpResponseRedirect(reverse('index'))
+      request.session ['visits'] = visits
 
-# SEARCH RESULTS
-def search_results(request):
-
-    return render(request, 'dog/search-results.html', {})
-
-# ACCOUNT
-# - Caters for Tourist, Host, and Admin
-# - Checks logged in user to decide which options to display
-def account(request):
-
-    return render(request, 'dog/account.html', {})
-
-# ADMIN - REPORTS
-# - Display totals for various data sets
-# - i.e. how many users are signed up
-# - total cottages
-# - Visits to cottages
-# - Just need to compile a reasonable set of figures
-def admin_reports(request):
-
-    return render(request, 'dog/admin-reports.html', {})
-
-########################################################################
-# HOST SPECIFIC
-########################################################################
-
-# HOST - ADD A COTTAGE
-# - Form to add a cottage
-def add_cottage(request):
-
-    add_cottage = AddCottageForm()
-
-    return render(request, 'dog/host-add-cottage.html', {'add_cottage': add_cottage,})
-
-# HOST - EDIT COTTAGE
-def edit_cottage(request):
-
-    return render(request, 'dog/host-edit-cottage.html', {})
-
-# HOST - SHOW BOOKINGS
-def show_bookings(request):
-
-    return render(request, 'dog/host-show-bookings.html', {})
+      
+      
